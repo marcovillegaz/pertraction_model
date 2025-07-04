@@ -1,0 +1,44 @@
+function D_mutual = Kubaczka(x,D_self,D_mutual)
+% D_ms = Kubaczka2014(D_ms,x,D)
+% This function calculate de mutual difussion coefficient or Maxwell-Stefan
+% difussion coefficiente in the polymer phase (component-polymer interaction)
+% and then, tha values are defined in the matrix that contains all the
+% difussion coefficient in the Maxwell-Stefan model.
+%
+% Input:
+%   x: molar fraction array 
+%   D_mutual: Maxwell-Stefan's difussion coefficient matrix.
+%   D_self: self difussion array of the n components
+% Output:
+%   D_mutual: Maxwell-Stefan's difussion coefficient matrix with the D(i,m) and
+%   D(m,i) elements incorporated.
+%
+% References:
+%   Kubaczka, A., Kamiński, W., & Marszałek, J. (2018). Predicting mass 
+%       fluxes in the pervaporation process using Maxwell-Stefan diffusion 
+%       coefficients. Journal of Membrane Science, 546(July 2017), 111–119.
+%       https://doi.org/10.1016/j.memsci.2017.08.074
+%   Kubaczka, A. (2014). Prediction of Maxwell-Stefan diffusion coefficients 
+%       in polymer-multicomponent fluid systems. Journal of Membrane Science,
+%       470, 389–398. https://doi.org/10.1016/j.memsci.2014.06.055
+
+%% CODE
+x = x';
+[~,m] = size(D_mutual);
+
+for i = 1:m-1     % the D(n,n) is zero
+    Ks_i = 1  - x(i)/sum(x.*(D_self(i)./D_self))
+
+    suma = 0;
+    for j = 1:m-1 
+        if j ~= i 
+            suma = suma + (x(j)/D_mutual(i,j))
+        end
+    end
+
+    aux = (1/x(m))*(Ks_i/D_self(i) - suma)
+    D_mutual(i,m) = aux;
+    D_mutual(m,i) = aux;
+end
+
+end

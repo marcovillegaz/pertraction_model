@@ -1,0 +1,17 @@
+Fitted Model:
+     General model Exp2:
+     fitObj(x) = a*exp(b*x) + c*exp(d*x)
+     Coefficients (with 95% confidence bounds):
+       a =   3.867e+13  (-5.107e+15, 5.184e+15)
+       b =     -0.1127  (-0.5718, 0.3463)
+       c =        1615  (1613, 1618)
+       d =  -0.0006724  (-0.0006769, -0.0006679)
+
+Fit Statistics:
+           sse: 0.0105
+       rsquare: 1.0000
+           dfe: 4
+    adjrsquare: 1.0000
+          rmse: 0.0513
+
+

@@ -1,0 +1,78 @@
+function D_self = VrentasVrentas(S,x,T)
+% This function compute the self difussion coefficients for a multicomponent
+% system employin the method of Vrentas and Vrantas derived from the
+% free-volume theory. 
+% Input:
+%   S: struct that contains the compounds as fields and the group
+%   of propeties. Each compounds has the properties gruops as fields.
+%   x: molar fraction vector [x(1) x(2) ... x(n)]
+%   T: system temperature
+% Output:
+%   D: self difussion vector [D(1),D(2),...,D(n)]
+%
+% References:
+%   Vrentas, J. S., & Vrentas, C. M. (1998). Predictive methods for 
+%       self-diffusion and mutual diffusion coefficients in polymer-solvent 
+%       systems. European Polymer Journal, 34(5–6), 
+%       797–803. https://doi.org/10.1016/S0014-3057(97)00205-X
+%   Kubaczka, A., Kamiński, W., & Marszałek, J. (2018). Predicting mass 
+%       fluxes in the pervaporation process using Maxwell-Stefan diffusion 
+%       coefficients. Journal of Membrane Science, 546(July 2017), 111–119.
+%       https://doi.org/10.1016/j.memsci.2017.08.074
+
+%% CODE
+% constant
+x = x';
+R = 1.987   ;   % gas constant [cal/mol K]
+
+component = fieldnames(S);   % field names
+n = length(component);        % number of components
+
+%% Extraction of molar weigth
+MW = zeros(1,n); % molar weight   [g/mol]
+for i = 1:n
+    MW(i) = S.(component{i}).molarWeigth{1,4}  % g/mol
+end
+
+%% Extraction of FVP
+D0 = zeros(1,n);     % D0_i                  [cm2/s] 
+beta = zeros(1,n);   % K1j/gamma             [cm3/g K]
+delta = zeros(1,n);  % K_2i - T_gi           [K]
+xi = zeros(1,n);     % xi ratio              [-]
+E = zeros(1,n);      % activaiton energy     [cal/mol]
+V_h = zeros(1,n);    % molar critical hole   [cm3/mol]
+
+for i = 1:n
+    V_h(i) = S.(component{i}).FVP{2,4}  ;   
+    D0(i) = S.(component{i}).FVP{3,4}   ;   
+    beta(i) = S.(component{i}).FVP{4,4}  ; 
+    delta(i) = S.(component{i}).FVP{5,4}  ;
+    xi(i) = S.(component{i}).FVP{6,4} ;   
+    E(i) = S.(component{i}).FVP{7,4}  ;    
+end
+
+% The critical hole free volume of solvent and polymer required for jump
+% can be estimated as the specific volumes at 0K using group contribuion
+% methods (Bondi,1968). The polymer is referred as de monomer.
+
+%% Unit change
+w = (x.*MW)./sum(x.*MW);   % molar fraction to weight fraction
+
+%% V_FH/gamma parameter (denominador)
+V_FH_gamma = 0  % [cm3/g]
+for i = 1:n
+    aux =  w(i).*beta(i).*(delta(i) + T)
+    V_FH_gamma = V_FH_gamma + aux
+end
+
+%% self difusion calculation for the non polymer component
+D_self = zeros(1,n)
+for i = 1:n
+    suma = w(1)*V_h(1)+w(2)*V_h(2)*xi(1)
+%     for j = 1:n  % numerador 
+%         suma = suma + w(j)*V_h(j)*(xi(end))  % [cm3/g]
+%     end
+    D_self(i) = D0(i)*exp(-E(i)/R*T)*exp(-suma/V_FH_gamma)  % [cm2/s]
+end
+
+end
