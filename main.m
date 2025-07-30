@@ -1,4 +1,3 @@
-
 addpath(genpath('source'))
 
 % Define compound to load.
