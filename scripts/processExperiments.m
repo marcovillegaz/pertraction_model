@@ -1,8 +1,8 @@
 % This script process the experimental data stored in
 % experimental_final.xlsx to be used in the matlab codes. 
 
-% This data is then used as input in the mass transfer model and to cretae
-% plots with experimental data. 
+% The data is then used as input in the mass transfer model and to cretae
+% plots with experimental points. 
 
 clc, clear
 fileName = 'final_experiments.xlsx';
