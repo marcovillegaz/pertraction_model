@@ -19,7 +19,7 @@ function B = Bmatrix(Dms,x)
 m = length(x) ;            % Number of components  
 B = zeros(m-1,m-1);
 
-% Bii
+% B_{ii}
 for i = 1:m-1
     sum = 0;
         for k = 1:m-1
@@ -30,7 +30,7 @@ for i = 1:m-1
     B(i,i) = x(i)/Dms(i,end) + sum;
 end
 
-% Bik
+% B_{ik}
 for i = 1:m-1
     for k = 1:m-1
         if k ~= i
