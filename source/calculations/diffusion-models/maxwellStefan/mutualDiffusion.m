@@ -19,19 +19,21 @@ function mutual_diffussion = mutualDiffusion(...
 % for example in composite membranes. 
 
 %% Non polimer iteractions
-debugMsg("Compute non polymer interactions")
 % Compute diffusion coefficients at infinite dilution 
+fprintf('\n%-30s\n',"infinite dilution diffusion coefficients")
 inf_dilu_diff = siddiqiLucas(temperature, compoundLibrary)
 
 % Compute mutual diffusion coefficients for non polymer interactions
+fprintf('\n%-30s\n',"mutual diffusion matrix for non polymer interaction")
 mutual_diff_npi = kooijmanTaylor(molar_fraction,inf_dilu_diff)
 
 %% Polymer interaction
-debugMsg("Compute polymer interactions via Free Volume Theory")
 % Self diffusion coefficient with Free Volume Theory
+fprintf('\n%-30s\n',"Self diffusion coefficients")
 self_diff = vrentasVrentas(molar_fraction,temperature,compoundLibrary) 
 
 % Mutual diffusion coefficient for polimer interactions
+fprintf('\n%-30s\n',"Mutual diffusion coefficient for polymers pair")
 mutual_diff_pi = kubaczka(molar_fraction,self_diff,mutual_diff_npi)
 
 %% Combine both interaction into one matrix
@@ -39,10 +41,5 @@ mutual_diff_pi = kubaczka(molar_fraction,self_diff,mutual_diff_npi)
 % interaction) return as a matrix that can be sum to obtain the mutual
 % difussion coefficient matrix. 
 
-mutual_diffussion = mutual_diff_pi;
-
-% For debugging
-debugMsg("Mutual diffusion matrix obtained")
-disp(mutual_diffussion)
-
+mutual_diffussion = mutual_diff_pi
 end
