@@ -1,19 +1,24 @@
 addpath(genpath('source'))
 
-% Define compound to load.
-polymerList = {"polystyrene"}
-compoundNames = {"benzene","methylAcetate","polystyrene"}  
-compoundDataFolder = "data/test-compounds";
+% Constants
+COMPOUNDS_LIST = {"benzene","methylAcetate","polystyrene"};  
+COMPOUNDS_FOLDER = "data/test-compounds";
+% System values (temporal)
+temperature = 300;
+molarWeight = [0.1, 0.6, 0.3];
 
-molar_fraction = [0.1, 0.6, 0.3]    % test molar fraction in the membrane
-temperature = 273.15 % temperature of the system
+% Loading libraries
+compoundsLib = CompoundsLibrary(COMPOUNDS_LIST,COMPOUNDS_FOLDER)
+unifacLib = UNIFACLibrary("data/unifac-data","unifac-test.xlsx")
 
-%% LOAD COMPOUND DATA
-% Load compound data and save in library
-compoundLibrary = initCompoundLibrary(compoundNames,compoundDataFolder) 
-% Load UNIFAC DATA
-unifacLibrary = loadUnifacData("unifac-test.xlsx")
+% Loading models 
+thermoModel = UNIFACModel(compoundsLib,unifacLib)
 
-%% COMPUTE SOMETHING
-fickDiffusivity = computeFickDiffusivity(...
-    compoundLibrary,unifacLibrary, temperature, molar_fraction)
+% Commpute activity coefficient
+Lngamma = thermoModel.computeActivityCoefficient(temperature,molarWeight)
+
+
+
+% %% COMPUTE SOMETHING
+% fickDiffusivity = computeFickDiffusivity(...
+%     compoundLibrary,unifacLibrary, temperature, molar_fraction)
