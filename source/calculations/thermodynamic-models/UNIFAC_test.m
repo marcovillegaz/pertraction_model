@@ -1,4 +1,4 @@
-function LnGamma = UNIFAC_vdW_FV(compoundsLibrary,unifacData,x,T,n)
+function LnGamma = UNIFAC_test(compoundsLibrary,unifacData,T,x,n)
 % This function calculates the activity coefficient of every component in a
 % misxture using the UNIFAC method described in:
 % Poling, B. E., Prausnitz, J. M., & O’Connell, J. P. (2001). 
@@ -25,22 +25,19 @@ function LnGamma = UNIFAC_vdW_FV(compoundsLibrary,unifacData,x,T,n)
 x = x';
 
 % Redefine unifac data
-Aij = unifacData.Aij     % group interaction parameters
-groupData = unifacData.groups  % cell with groups data
-
-% get component lists
-component = fields(compoundsLibrary);
+Aij = unifacData.Aij;     % group interaction parameters
+groupData = unifacData.groups;  % cell with groups data
 
 % Extract molar weight and density as array
-MW = extractPropertyAsArray(compoundsLibrary, {"molarWeigth",1})
-rho_fh = extractPropertyAsFunction(compoundsLibrary, "density")
+MW = compoundsLibrary.extractPropertyAsArray({"molarWeigth",1});
+rho_fh = compoundsLibrary.extractPropertyAsFunction("density");
 
 % MW = data(:,[1 6]);       % molar weight of group
 groupData(:,6) = [];             % deleting MW column
 
 % CONSTANTS
 [g,c] = size(groupData);  % g = # of groups
-c = c-5             % c = # of components
+c = c-5;             % c = # of components
 
 
 v = MW./rho_fh(T);    % molar volume vector [cm3/mol]
