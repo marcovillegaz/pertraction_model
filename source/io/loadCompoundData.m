@@ -41,6 +41,7 @@ function compound = loadCompoundData(filePath)
     
     % Define .name field
     compound.name = compoundName; 
+    compound.filepath = filePath;
 
     %% Load OtherProps (required for estimation)
     if ismember("OtherProps", sheetNames)
