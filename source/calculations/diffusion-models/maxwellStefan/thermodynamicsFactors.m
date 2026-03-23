@@ -1,4 +1,4 @@
-function Gamma = thermodynamicsFactors(compoundLibrary,unifacLibrary,temperature,x)
+function GammaMatrix = thermodynamicsFactors(compoundLibrary,unifacLibrary,temperature,x)
 % This function computes the thermodinamic factors matrix from the
 % Maxwell-Stefan model, following equation (17) from Kubaczka (2014).
 % Input:
@@ -38,11 +38,11 @@ end
 
 
 %% Thermodynamic factormatrix calculation
-Gamma = zeros(m-1); % preallocation
+GammaMatrix = zeros(m-1); % preallocation
 for i = 1:m-1 
     for k = 1:m-1
         kroneckerDelta = double(i == k); % compute the kronecker delta
-        Gamma(i,k) = kroneckerDelta + x(i)*(J(i,k) - J(i,m));
+        GammaMatrix(i,k) = kroneckerDelta + x(i)*(J(i,k) - J(i,m));
     end
 end
 
