@@ -1,0 +1,27 @@
+{
+    "name": "benzene",
+    "molarWeight": 78.1,
+    "criticalProp": {
+        "Tc": 562.0,
+        "Pc": 48.95,
+        "Vc": 256.0
+    },
+    "boilingPoint": {
+        "Tb": 353.25,
+        "Vb": 374.0
+    },
+    "FVP": {
+        "V_star": 70.37,
+        "D0": 4.47e-4,
+        "K1_gamma": 0.0015,
+        "K2_Tg": -94.32,
+        "E": 0
+    },
+    "density": {
+        "source": "experimental",
+        "file": "benzene_density.csv"
+    },
+    "viscosity": {
+        "source": "sastriRao"
+    }
+}
