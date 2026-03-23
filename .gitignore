@@ -1,4 +1,21 @@
-**.jpg
+# MATLAB
+*.asv          
+*.m~           
+*.mex*         
+octave-workspace
 
-*.asv
+# Generated output
+images/
+data/fit-results/
+*.jpg
+
+# CLAUDE.md (local AI session config — not part of the project)
 CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp
