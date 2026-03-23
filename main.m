@@ -18,7 +18,6 @@ thermoModel = UNIFACModel(compoundsLib,unifacLib)
 Lngamma = thermoModel.computeActivityCoefficient(temperature,molarWeight)
 
 
-
 % %% COMPUTE SOMETHING
 % fickDiffusivity = computeFickDiffusivity(...
 %     compoundLibrary,unifacLibrary, temperature, molar_fraction)
