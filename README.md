@@ -13,47 +13,54 @@ The function loadCompoundData() imports and organizes the data for each compound
 The function loadUnifacData() imports and organize unifac groups that describe the activity model for the specified system and store tha data as struct for activity coefficients computation. 
 
 
-# Project structure
-- [Source Overview](source/README.md)
-- [Data Overview](data/README.md)
-- [Scripts Overview](scripts/README.md)
+## Project structure
 
+- [Source Overview](source/README.md) — MATLAB code: io, calculations, classes, processing, utils
+- [Data Overview](data/README.md) — input / intermediate / output data lifecycle
+- [Scripts Overview](scripts/README.md) — legacy System B (PCB77) workflow scripts
+- [Theory](docs/theory/README.md) — mathematical reference (diffusion models, thermodynamics, property models), organized by physical model rather than by source file
+- [Project log](docs/log/README.md) — chronological record of what happened in this project and why
+- [Next steps](docs/next_steps/next_steps.md) — current, forward-looking ask/instructions
+- `tests/` — MATLAB `matlab.unittest` suite, run via `cd tests; runAllTests`
 
-
-
-
-
-
-
-
-
-
-# Recommended project structure folder
-/MyProject
-├── main.m                        % Entry point script
+```
+.
+├── main.m                        # Active entry point (System A: benzene + methyl acetate + polystyrene)
 │
-├── /src                          % Core logic
-│   ├── /io                       % All import/export functions
-│   │   ├── readCSV.m
-│   │   └── loadExperimentalData.m
-│   │
-│   ├── /processing               % Data preprocessing and transformations
-│   │   ├── filterOutliers.m
-│   │   └── normalizeSignal.m
-│   │
-│   ├── /calculations             % Scientific or domain-specific models
-│   │   ├── computeDiffusion.m
-│   │   └── estimateSlope.m
-│   │
-│   └── /utils                    % General helpers (used everywhere)
-│       └── printTable.m
+├── source/                       # Core logic
+│   ├── io/                       # Excel/compound-data import
+│   ├── processing/                # Superseded by CompoundsLibrary methods; kept for obsolete/ scripts
+│   ├── calculations/              # Domain models, pure functions
+│   │   ├── thermodynamic-models/  # UNIFAC legacy/FV/vdW-FV + shared terms (unifac/)
+│   │   ├── diffusion-models/      # Maxwell-Stefan → Fick chain (fick/, maxwellStefan/)
+│   │   └── property-models/       # Density/viscosity/molar-volume correlations
+│   ├── classes/                   # OOP layer: Libraries, ThermoModel, DiffusionModel
+│   └── utils/                     # projectPath, debugMsg, molarfraction
 │
-├── /data                         % Raw input and reference data
-│   └── experiment_01.csv
+├── data/
+│   ├── input/                    # Hand-curated/external; code never writes here
+│   │   ├── compounds/             # One .xlsx per compound (System A + System B)
+│   │   ├── reference/             # Literature correlation tables
+│   │   ├── unifac/                # UNIFAC group + interaction-parameter tables
+│   │   └── experimental/          # Raw measured data
+│   ├── intermediate/             # Generated, consumed downstream; regenerable
+│   │   ├── experiments/
+│   │   ├── compound-structs/
+│   │   └── property-fits/         # Gitignored
+│   ├── output/                   # Terminal artifacts (figures, results); gitignored
+│   └── test/                      # Literature reference figures (UNIFAC variant papers)
 │
-├── /scripts                      % Scripts for running full workflows
-│   └── analyzeExperiment.m
+├── docs/
+│   ├── theory/                    # Math reference (see Theory link above)
+│   ├── log/                       # Project log (see Project log link above)
+│   ├── next_steps/                # next_steps.md (current ask) + migration-plan.md
+│   └── project-state-2026-06-22.md  # Dated snapshot, kept for history
 │
-├── /results                      % Output: figures, tables, etc.
-│
-└── README.md
+├── tests/                        # matlab.unittest suite + fixtures/
+├── scripts/                      # System B (PCB77) analysis workflow
+├── main/                         # FVP_fit.m -- System B FVP fitting (GA)
+├── config/                       # pertractSystem.m (System B constants)
+├── obsolete/                     # G1/G2 legacy code, archived not deleted
+├── diagrams/                     # Architecture diagrams (drawio)
+└── .claude/skills/                # Project-scoped Claude Code skills (e.g. project-log)
+```
