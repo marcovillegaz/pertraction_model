@@ -1,9 +1,8 @@
-This folder contains all function that performs calculations like: thermodynamic models, 
-porperty models
-groupcontributtion models 
-diffusion models 
+This folder contains all functions that perform calculations: thermodynamic
+models, property models, group-contribution models, diffusion models.
 
+For the math behind these functions, see [`docs/theory/`](../../docs/theory/README.md):
 
-- diffussion models overview
-- Propertymodel overview
-- Thermodynamic models overview
+- [Diffusion models overview](../../docs/theory/README.md#diffusion-models)
+- [Property models overview](../../docs/theory/property-models/density-viscosity.md)
+- [Thermodynamic models overview](../../docs/theory/thermodynamic-models/unifac.md)

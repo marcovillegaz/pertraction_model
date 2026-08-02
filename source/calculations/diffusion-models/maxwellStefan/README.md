@@ -1,17 +1,9 @@
-# maxwellStefan/mutualDifussion.m 
-This correpsond to maxwel'stefans diffusion coeffcients
+# maxwellStefan/
 
-# maxwellStefan/thermodynamicsFactors.m 
-compute the thermodinamyc factor matrix $[\Gamma]$ from maxwell-stefan. The function used the activityCoefficient.m (LINK) function to obtian the activity coeffcient $\gamma$ using various models. 
+Polymer mutual diffusion, the inverse-drag matrix, and the thermodynamic
+factor matrix. Math lives in
+[`docs/theory/diffusion-models/maxwell-stefan.md`](../../../../docs/theory/diffusion-models/maxwell-stefan.md).
 
-The equation to compute this matrix is the one presented in 
-
-*FORMULA GOES HERE*
-
-Depending on the unifac model used, you should enter ad input the polymerization degree, for example in UNIFAC-FV model- 
-
-
-# maxwellStefan/inverseDrag.m
-compute the inverstrag coeffcient matrix $[B]$ based on the mutual diffusion coeffcients, also known as Maxwell-Stefan diffusion coefficients. 
-
-*FORMULA GOES HERE*
+- `mutualDiffusion.m` — assembles the full Maxwell-Stefan diffusion matrix (non-polymer pairs + `kubaczka.m` polymer pairs)
+- `thermodynamicsFactors.m` — computes $[\Gamma]$ via finite-difference Jacobian of $\ln\gamma$ (UNIFAC — see [`docs/theory/thermodynamic-models/unifac.md`](../../../../docs/theory/thermodynamic-models/unifac.md))
+- `Bmatrix.m` — computes the inverse-drag matrix $[B]$
