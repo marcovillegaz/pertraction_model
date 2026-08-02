@@ -145,7 +145,16 @@ Replace all `fieldnames(compoundLibrary)` and `extractPropertyAsArray(compoundLi
 
 **Step 2c** — Verify `thermodynamicsFactors.m`
 
-It calls `activityCoefficients('unifac-test', compoundLibrary, unifacLibrary, x, T, n)` which routes to `UNIFAC_test`. Confirm the signature is compatible with the current `UNIFACLibrary` object, then decide whether to keep the wrapper or call `UNIFACModel` directly.
+**RESOLVED (2026-08-01):** `thermodynamicsFactors.m` now takes a `ThermoModel`
+object directly (`thermodynamicsFactors(thermoModel, T, x)`) instead of
+routing through `activityCoefficients`. That wrapper had moved to
+`obsolete/` and had a live argument-order bug (`(x, T)` passed into
+`UNIFAC_test`'s `(T, x)` slots), so anything reaching it was computing
+garbage — see `docs/next_steps.md` and
+`docs/theory/thermodynamic-models/unifac.md`. `UNIFAC_test.m` /
+`UNIFAC_vdW_FV.m` were also renamed to `unifacFV.m` / `unifacVdwFV.m` as
+part of a broader UNIFAC model-selection refactor (legacy / FV / vdW-FV via
+`ThermoModel.create`).
 
 **Step 2d** — Rewrite `MaxwellStefanModel.computeDiffusivity()`
 
