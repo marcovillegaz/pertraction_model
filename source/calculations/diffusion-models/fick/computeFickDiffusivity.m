@@ -1,20 +1,20 @@
 function fickDiffusivity = computeFickDiffusivity(...
-    compoundLibrary,unifacLibrary, temperature, molar_fraction)
+    compoundLibrary, thermoModel, temperature, molar_fraction)
 %MAXWELLSTEFANDIFFUSSION This function compute the effective difussivity,
 %that led us work with the mass transfer equation from the Maxwell stefan
-%form to the FIcks law form. 
+%form to the FIcks law form.
 %   input:
-%       compoundLibrary (struct): struct that contains the compounds in the
-%       system and all their properties. 
-%       unifacLibrary (struct): structure with the unifac interaaction
-%       parameters of the componentes. 
+%       compoundLibrary (CompoundsLibrary): compounds in the system and
+%       all their properties.
+%       thermoModel (ThermoModel): activity-coefficient model (e.g. a
+%       UNIFACFVModel) used to build the thermodynamic factor matrix.
+%       The model already owns its unifacLibrary and any model-specific
+%       options (e.g. degree of polymerization).
 %       temperature: temeprature of the system [K]
 %       molar_fraction (array): molar fraction of componentes in the membrane. The
 %       length of this array must be the same as the number of compounds in
-%       compoundLibrary. 
-%       polymerizationDegree (int): degree of polymerization (OPTIONAL
-%       DEPENDS OF THE UNIFAC MODEL USED) 
-%   Output: 
+%       compoundLibrary.
+%   Output:
 %       DifussionCoefficient (array): n by n matrix that contain all the
 %       diffusion coefficientes acoording to the Maxwell-Stefan Diffusion
 %       Theory. [cm2/s]
@@ -35,7 +35,7 @@ B = Bmatrix(mutual_diffusion,molar_fraction)
 % disp(B)
 
 % Thermodynamic factor matrix $[\Gamma]$
-Gamma = thermodynamicsFactors(compoundLibrary,unifacLibrary,temperature,molar_fraction)
+Gamma = thermodynamicsFactors(thermoModel,temperature,molar_fraction)
 %fprintf('%-30s\n\n',"Thermodinamic factor matrix [Gamma] ... OK! ")
 %disp(Gamma)
 
