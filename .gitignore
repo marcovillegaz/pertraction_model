@@ -5,8 +5,8 @@
 octave-workspace
 
 # Generated output
-images/
-data/fit-results/
+data/output/
+data/intermediate/property-fits/
 *.jpg
 
 # CLAUDE.md (local AI session config — not part of the project)
@@ -19,3 +19,6 @@ Thumbs.db
 # Editors
 .vscode/
 *.swp
+
+graphify-out/
+.claude/

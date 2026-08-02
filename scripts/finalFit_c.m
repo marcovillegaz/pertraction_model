@@ -23,17 +23,17 @@ mn_cell = {
 
 %% LOADING NECESSARY DATA AND PRE-PROCESSING
 % Load equilibrium data
-load eqData.mat       % eqData w_poly
+load(projectPath('data','intermediate','compound-structs','eqData.mat'))       % eqData w_poly
     cteEq = [eqData.POMS 0];     % Equilibria constant of aq phase. [mol/cm3] / [mol/cm3]
 
 % Load data stored in structs
-load compoundDataFVP.mat   % S unifac
-    unifac = UNIFAC_data;   
+load(projectPath('data','intermediate','compound-structs','compoundDataFVP.mat'))   % S unifac
+    unifac = UNIFAC_data;
     S.poms.FVP{6,4} = 1;        %% TAKE A LOOK
     S.poms.density = @(T) 910;  %% TAKE A LOOK
 
 % Loas experimental data stored in struct
-load expPerstract.mat  % expPerstract
+load(projectPath('data','intermediate','experiments','expPerstract.mat'))  % expPerstract
     t_exp = expPerstract.time;   % experimental times
     w.aq = (expPerstract.waterPOMS.aq).*10^-6;   % mass fractions
     w.ext = (expPerstract.waterPOMS.ext).*10^-6;
@@ -136,6 +136,6 @@ cteFinal = [cteNames,cteUnits,cteCell];
 cteFinal = [colName;cteFinal];
 
 % Save results in .txt file
-writecell(cteFinal,'waterPOMS_fit_c.txt')
+writecell(cteFinal,projectPath('data','intermediate','compound-structs','waterPOMS_fit_c.txt'))
 clear
     

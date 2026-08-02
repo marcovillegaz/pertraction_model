@@ -78,7 +78,7 @@ function saveFitResults(fitObj, stats, compoundName, propertyName)
 %SAVEFITRESULTS Save fit object and stats to a .txt file
 
     % Ensure output folder exists
-    outputFolder = fullfile('data','fit-results');
+    outputFolder = projectPath('data','intermediate','property-fits');
     if ~exist(outputFolder, 'dir')
         mkdir(outputFolder);
     end
@@ -113,7 +113,7 @@ function plotAndSaveFit(T_K, y, fitFunc, compoundName, propertyName)
 %PLOTANDSAVEFIT Create and save a plot of the fitted data (invisible figure)
 
     % Ensure the output folder exists
-    outputFolder = 'images';
+    outputFolder = projectPath('data','output','figures');
     if ~exist(outputFolder, 'dir')
         mkdir(outputFolder);
     end

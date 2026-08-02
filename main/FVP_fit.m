@@ -6,7 +6,7 @@ clc,clear
 T = (0:5:60)'+ 273.15;          % [K] Temperature range
 nga = 5;  % number of times that the genetic algortihm is applied
 plotNames = {'PCB77','Water','[omim][Tf2N]','Acetonitrile'};
-datafile = fullfile(pwd, 'data', 'compoundData.mat'); % data path
+datafile = projectPath('data', 'intermediate', 'compound-structs', 'compoundData.mat'); % data path
 
 %% Linear constrains and bounds
 A = [];
@@ -161,9 +161,10 @@ for i = 1:length(component)
     legend('Experimental points','GA optimization','Location','northwest')
     
     imagename = strcat(component{i},"_FVP",".jpg");
+    imagepath = fullfile(projectPath('data','output','figures'), imagename);
 
     fprintf('\n%-30s',strcat("saving plot as ",imagename," ..."))
-        exportgraphics(gca,imagename,'Resolution',800)
+        exportgraphics(gca,imagepath,'Resolution',800)
 
     fprintf('%-30s\n\n'," OK!")
     fprintf('%30s\n',repmat('-',7))
@@ -171,13 +172,13 @@ for i = 1:length(component)
     close
 end
 
-save compoundDataFVP.mat S propGroups UNIFAC_data
+save(projectPath('data','intermediate','compound-structs','compoundDataFVP.mat'), 'S', 'propGroups', 'UNIFAC_data')
 
 fprintf('\n%30s',"Saving FVP bests results in .txt file")
     colnames = {'component','D0','K_1i/gamma','K_2i - T_gi','r2'};
     best_results = [component,best_results];
     best_results = [colnames;best_results];
-    writecell(best_results,'FVP_results.txt')
+    writecell(best_results,projectPath('data','intermediate','compound-structs','FVP_results.txt'))
     
 fprintf('%-30s\n'," OK!")
 fprintf('%30s\n',repmat('-',7))

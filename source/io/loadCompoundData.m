@@ -6,7 +6,7 @@ function compound = loadCompoundData(filePath)
 %
 % Description:
 %   Loads the sheets 'OtherProps', 'Density', and 'Viscosity' (if available)
-%   from a compound-specific Excel file located in 'data/compound-data/'.
+%   from a compound-specific Excel file located in 'data/input/compounds/'.
 %   If Density or Viscosity are missing, it will estimate them using
 %   critical properties from OtherProps. If critical properties are also missing,
 %   an error message is shown.

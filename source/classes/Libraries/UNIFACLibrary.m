@@ -9,8 +9,8 @@ classdef UNIFACLibrary < ThermoLibrary
         function obj = UNIFACLibrary(folderPath, filename)
             % Defaults inputs
             arguments
-                folderPath (1,:) char = fullfile('data', 'unifac-data')
-                filename (1,:) char = 'unifac.xlsx'
+                folderPath (1,:) char = projectPath('data', 'input', 'unifac')
+                filename (1,:) char = 'unifac-test.xlsx'
             end
             
             % Call parent constructor to set filePath

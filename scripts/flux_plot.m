@@ -23,17 +23,17 @@ mn_cell = {
 tf = 7
 
 % LOAD FITTED DATA
-bothData = readcell('waterPOMS_fit_c.txt');
+bothData = readcell(projectPath('data','intermediate','compound-structs','waterPOMS_fit_c.txt'));
 Fit.both = cell2mat(bothData(2:end-1,3))
 
 % Load data stored in structs
-load compoundDataFVP.mat   % S unifac
-    unifac = UNIFAC_data;   
+load(projectPath('data','intermediate','compound-structs','compoundDataFVP.mat'))   % S unifac
+    unifac = UNIFAC_data;
     S.poms.FVP{6,4} = 1;        %% TAKE A LOOK
     S.poms.density = @(T) 910;  %% TAKE A LOOK
 
 % Loas experimental data stored in struct
-load expPerstract.mat  % expPerstract
+load(projectPath('data','intermediate','experiments','expPerstract.mat'))  % expPerstract
     t_exp = expPerstract.time;   % experimental times
     w.aq = (expPerstract.waterPOMS.aq).*10^-6;   % mass fractions
     w.ext = (expPerstract.waterPOMS.ext).*10^-6;
@@ -42,7 +42,7 @@ load expPerstract.mat  % expPerstract
     Cb_0 = [c_exp.aq(1,1) c_exp.ext(1,1)];  % Molar concentration at t = 0 for both phases [aq ext]
 
 % Load equilibrium data
-load eqData.mat       % eqData w_poly
+load(projectPath('data','intermediate','compound-structs','eqData.mat'))       % eqData w_poly
     cteEq = [eqData.POMS 0];     % Equilibria constant of aq phase. [mol/cm3] / [mol/cm3]
 
 %% Estimatin cocnentration by model
@@ -98,7 +98,7 @@ for i = 1:length(names)
         'MarkerEdgeColor',"#EB671B")
     legend('FontSize',12)
     
-    exportgraphics(gca,'flux_fit.jpg','Resolution',1800)
+    exportgraphics(gca,fullfile(projectPath('data','output','figures'),'flux_fit.jpg'),'Resolution',1800)
     close
 
 

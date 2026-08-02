@@ -6,7 +6,7 @@
 
 clc, clear
 fileName = 'final_experiments.xlsx';
-filePath = fullfile(pwd, 'data', 'input','experimental', fileName);
+filePath = projectPath('data', 'input', 'experimental', fileName);
 
 % Name of the sheet wich contians the relevant experimental information. 
 EXPERIMENT_LIST = {'milk_POMS','water_PEBA','milk_PEBA','water_POMS'};
@@ -58,7 +58,7 @@ for s = 1:length(EXPERIMENT_LIST)
     end
 end
 
-save(fullfile(pwd,'data','experimentalStruct.mat'),'experimentalStruct')
+save(projectPath('data','intermediate','experiments','experimentalStruct.mat'),'experimentalStruct')
 
 %% PROCESS DATA FROM PARTITION CONSTANT EXPERIMENTS
 fprintf('[%s] Processing experiment: %s\n', datestr(now, 'HH:MM:SS'),PARTITION_SHEET);
@@ -82,7 +82,7 @@ MW = 291.99;     % molar weight g/mol of PCB77
 partitionTable = computePartition(summaryTable, Vliq, Vmem,PCB77_MW);
 disp(partitionTable)
 
-save(fullfile(pwd,'data','partitionConstants.mat'),'partitionTable')
+save(projectPath('data','intermediate','experiments','partitionConstants.mat'),'partitionTable')
 
 fprintf('PROCESESSING COMPLETE! %12s\n\n',fileName)
 clear

@@ -33,7 +33,7 @@ classdef CompoundsLibrary
             % Defaults inputs
             arguments
                 compoundList (1,:) cell
-                folderPath (1,:) char = fullfile('data', 'compound-data')
+                folderPath (1,:) char = projectPath('data', 'input', 'compounds')
             end
 
             % Struct definition
